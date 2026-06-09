@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Appointments{% endblock %}
+{% block page_title %}Appointments{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span><i class="bi bi-calendar-check me-2 text-muted"></i>All Appointments</span>
+    <a href="/appointments/add" class="btn btn-sm btn-teal"><i class="bi bi-plus-lg me-1"></i>Book Appointment</a>
+  </div>
+  <div class="card-body p-0">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th class="ps-4">#</th>
+          <th>Patient</th>
+          <th>Doctor</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in appointments %}
+        <tr>
+          <td class="ps-4 text-muted" style="font-size:12px;">{{ loop.index }}</td>
+          <td class="fw-500">{{ a.patient_name }}</td>
+          <td>Dr. {{ a.doctor_name }}</td>
+          <td>{{ a.date }}</td>
+          <td>{{ a.get('time','—') }}</td>
+          <td>
+            <span class="badge badge-{{ a.status|lower }}">{{ a.status }}</span>
+          </td>
+          <td>
+            {% if a.status == 'Pending' %}
+              <a href="/appointments/status/{{ a._id }}/Done"
+                 class="btn btn-sm btn-outline-success me-1">
+                <i class="bi bi-check-lg"></i>
+              </a>
+              <a href="/appointments/status/{{ a._id }}/Cancelled"
+                 class="btn btn-sm btn-outline-warning me-1">
+                <i class="bi bi-x-lg"></i>
+              </a>
+            {% endif %}
+            <a href="/appointments/delete/{{ a._id }}"
+               onclick="return confirm('Delete this appointment?')"
+               class="btn btn-sm btn-outline-danger">
+              <i class="bi bi-trash"></i>
+            </a>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-center text-muted py-4">No appointments yet</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
