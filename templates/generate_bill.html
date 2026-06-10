@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Generate Bill{% endblock %}
+{% block page_title %}Generate Bill{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-receipt me-2"></i>Bill Details</div>
+      <div class="card-body p-4">
+        <form method="POST">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Patient *</label>
+              <select name="patient_name" class="form-select" required>
+                <option value="">Select Patient</option>
+                {% for p in patients %}
+                  <option>{{ p.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Doctor Fees (Rs.)</label>
+              <input type="number" name="doctor_fees" class="form-control"
+                     placeholder="0" min="0" value="0">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Medicine Cost (Rs.)</label>
+              <input type="number" name="medicine" class="form-control"
+                     placeholder="0" min="0" value="0">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Lab Charges (Rs.)</label>
+              <input type="number" name="lab" class="form-control"
+                     placeholder="0" min="0" value="0">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Room Charges (Rs.)</label>
+              <input type="number" name="room" class="form-control"
+                     placeholder="0" min="0" value="0">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Payment Status</label>
+              <select name="status" class="form-select">
+                <option>Unpaid</option>
+                <option>Paid</option>
+                <option>Partial</option>
+              </select>
+            </div>
+          </div>
+          <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-teal px-4">
+              <i class="bi bi-check-lg me-1"></i>Generate Bill
+            </button>
+            <a href="/bills" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
